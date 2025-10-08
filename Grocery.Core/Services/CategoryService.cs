@@ -6,14 +6,12 @@ using System.Collections.Generic;
 
 public class CategoryService : ICategoryService
 {
-    private readonly ICategoryRepository _repository;
+    private readonly ICategoryRepository _repo;
 
-    public CategoryService(ICategoryRepository repository)
+    public CategoryService(ICategoryRepository repo)
     {
-        _repository = repository;
+        _repo = repo;
     }
 
-    public Task AddCategoryAsync(Category category) => _repository.AddAsync(category);
-
-    public Task<List<Category>> GetCategoriesAsync() => _repository.GetAllAsync();
+    public Task<List<Category>> GetCategoriesAsync() => _repo.GetAllAsync();
 }

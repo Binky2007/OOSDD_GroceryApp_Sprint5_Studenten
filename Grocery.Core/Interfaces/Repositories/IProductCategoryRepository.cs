@@ -1,10 +1,17 @@
-namespace Grocery.Core.Interfaces.Repositories;
 using Grocery.Core.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-public interface IProductCategoryRepository
+
+namespace Grocery.Core.Interfaces.Repositories
 {
-    Task<List<ProductCategory>> GetByCategoryIdAsync(int categoryId);
-    Task AddAsync(ProductCategory productCategory);
+    public interface IProductCategoryRepository
+    {
+        Task AddAsync(ProductCategory productCategory);
+        Task<List<ProductCategory>> GetByCategoryIdAsync(int categoryId);
+    }
+
 }

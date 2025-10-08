@@ -7,5 +7,4 @@ using System.Threading.Tasks;
 public interface ICategoryService
 {
     Task<List<Category>> GetCategoriesAsync();
-    Task AddCategoryAsync(Category category);
 }

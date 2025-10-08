@@ -1,5 +1,5 @@
-using Grocery.Core.Models;
 using Grocery.App.ViewModels;
+using Grocery.Core.Models;
 using Microsoft.Maui.Controls;
 
 namespace Grocery.App.Views
@@ -11,15 +11,14 @@ namespace Grocery.App.Views
             InitializeComponent();
             BindingContext = viewModel;
         }
-
-        // Event handler die XAML verwacht
-        private async void OnCategorySelected(object sender, SelectionChangedEventArgs e)
+        private async void OnCategoryTapped(object sender, ItemTappedEventArgs e)
         {
-            if (e.CurrentSelection.FirstOrDefault() is Category selected)
+            var category = e.Item as Category;
+            if (category != null)
             {
-                // Navigeer naar ProductCategoriesView en geef CategoryId door
-                await Shell.Current.GoToAsync($"productcategories?categoryId={selected.Id}");
+                await Shell.Current.GoToAsync($"productcategories?categoryId={category.Id}");
             }
         }
+
     }
 }

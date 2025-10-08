@@ -5,34 +5,29 @@ using System.Collections.ObjectModel;
 using Microsoft.Maui.Controls;
 
 
+
 namespace Grocery.App.ViewModels
 {
-    [QueryProperty(nameof(CategoryId), "categoryId")]
-    public partial class ProductCategoriesViewModel : ObservableObject
+    public class ProductCategoriesViewModel
     {
-        private readonly IProductCategoryService _service;
+        private readonly IProductService _service;
 
-        public ObservableCollection<ProductCategory> ProductCategories { get; } = new();
+        public ObservableCollection<Product> Products { get; } = new();
 
-        [ObservableProperty]
-        private int _categoryId;
-
-        public ProductCategoriesViewModel(IProductCategoryService service)
+        public ProductCategoriesViewModel(IProductService service)
         {
             _service = service;
         }
 
-        partial void OnCategoryIdChanged(int value)
+        public async Task Load(int categoryId)
         {
-            LoadProductCategories();
-        }
-
-        private async void LoadProductCategories()
-        {
-            var list = await _service.GetByCategoryIdAsync(CategoryId);
-            ProductCategories.Clear();
-            foreach (var pc in list)
-                ProductCategories.Add(pc);
+            var list = _service.GetByCategoryId(categoryId);
+            Products.Clear();
+            foreach (var product in list)
+                Products.Add(product);
         }
     }
+
+
+
 }

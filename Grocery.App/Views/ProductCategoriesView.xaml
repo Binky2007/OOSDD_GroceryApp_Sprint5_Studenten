@@ -1,17 +1,72 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Grocery.App.ViewModels"
+             xmlns:m="clr-namespace:Grocery.Core.Models;assembly=Grocery.Core"
              x:Class="Grocery.App.Views.ProductCategoriesView"
-             Title="Product Categories">
+             x:DataType="vm:ProductCategoriesViewModel"
+             Title="Productcategorieën">
 
-    <CollectionView ItemsSource="{Binding ProductCategories}">
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <Frame Padding="10" Margin="5" BorderColor="LightGray" CornerRadius="5">
-                    <Label Text="{Binding Name}" FontSize="20" VerticalOptions="Center" HorizontalOptions="Start"/>
-                </Frame>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+    <Shell.TitleView>
+        <Grid>
+            <Label Text="Producten in categorie" FontSize="Large" HorizontalOptions="Center" VerticalOptions="Center" />
+        </Grid>
+    </Shell.TitleView>
 
+    <Border Stroke="#C49B33" StrokeThickness="4" Padding="10" Margin="10" HorizontalOptions="Center">
+        <CollectionView ItemsSource="{Binding Products}" Margin="20" HorizontalOptions="Center">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+
+            <!-- Header -->
+            <CollectionView.Header>
+                <Grid Padding="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="600" />
+                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition Width="400" />
+                        <ColumnDefinition Width="200" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Text="Naam" FontAttributes="Bold" />
+                    <Label Grid.Column="1" Text="Prijs" FontAttributes="Bold" HorizontalOptions="End" />
+                    <Label Grid.Column="2" Text="Voorraad" FontAttributes="Bold" HorizontalOptions="End" />
+                    <Label Grid.Column="3" Text="Houdbaar tot" FontAttributes="Bold" HorizontalOptions="End" />
+                </Grid>
+            </CollectionView.Header>
+
+            <!-- Items -->
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="m:Product">
+                    <Grid Padding="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="600" />
+                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="400" />
+                            <ColumnDefinition Width="200" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Naam -->
+                        <Label Grid.Column="0" Text="{Binding Name}" />
+
+                        <!-- Prijs -->
+                        <Label Grid.Column="1" Text="{Binding Price, StringFormat='€{0:F2}'}" HorizontalOptions="End" />
+
+                        <!-- Voorraad -->
+                        <Label Grid.Column="2" Text="{Binding Stock}" HorizontalOptions="End">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label" Binding="{Binding Stock}" Value="0">
+                                    <Setter Property="Text" Value="niet op voorraad" />
+                                    <Setter Property="TextColor" Value="Red" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+
+                        <!-- Houdbaarheidsdatum -->
+                        <Label Grid.Column="3" Text="{Binding ShelfLife, StringFormat='{}{0:dd-MM-yyyy}'}" HorizontalOptions="End" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Border>
 </ContentPage>

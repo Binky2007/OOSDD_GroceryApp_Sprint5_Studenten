@@ -1,36 +1,31 @@
-namespace Grocery.Core.Data.Repositories;
-using Grocery.Core.Interfaces.Repositories;
 using Grocery.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-public class CategoryRepository : ICategoryRepository
+
+namespace Grocery.Core.Data.Repositories
 {
-    private readonly List<Category> _categories = new();
-
-    public Task AddAsync(Category category)
+    public class CategoryRepository : ICategoryRepository
     {
-        category.Id = _categories.Count + 1;
-        _categories.Add(category);
-        return Task.CompletedTask;
+        public async Task<List<Category>> GetAllAsync()
+        {
+            // Simuleer data
+            return new List<Category>
+            {
+                new Category { Id = 1, Name = "Zuivel" },
+                new Category { Id = 2, Name = "Bakkerij" },
+                new Category { Id = 3, Name = "Ontbijtgranen" }
+            };
+
+        }
+
+        public async Task<Category> GetByIdAsync(int id)
+        {
+            return (await GetAllAsync()).FirstOrDefault(c => c.Id == id);
+        }
     }
 
-    public Task DeleteAsync(int id)
-    {
-        _categories.RemoveAll(c => c.Id == id);
-        return Task.CompletedTask;
-    }
-
-    public Task<List<Category>> GetAllAsync() => Task.FromResult(_categories);
-
-    public Task<Category> GetByIdAsync(int id) => 
-        Task.FromResult(_categories.FirstOrDefault(c => c.Id == id));
-
-    public Task UpdateAsync(Category category)
-    {
-        var index = _categories.FindIndex(c => c.Id == category.Id);
-        if (index >= 0) _categories[index] = category;
-        return Task.CompletedTask;
-    }
 }

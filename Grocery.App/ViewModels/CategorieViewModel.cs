@@ -6,25 +6,23 @@ using System.Collections.ObjectModel;
 
 namespace Grocery.App.ViewModels
 {
-    public partial class CategoriesViewModel : ObservableObject
+    public class CategoriesViewModel
     {
-        private readonly ICategoryService _categoryService;
-
+        private readonly ICategoryService _service;
         public ObservableCollection<Category> Categories { get; } = new();
 
-        public CategoriesViewModel(ICategoryService categoryService)
+        public CategoriesViewModel(ICategoryService service)
         {
-            _categoryService = categoryService;
+            _service = service;
             LoadCategories();
         }
 
-        [RelayCommand]
         private async void LoadCategories()
         {
-            var categories = await _categoryService.GetCategoriesAsync();
-            Categories.Clear();
-            foreach (var c in categories)
-                Categories.Add(c);
+            var list = await _service.GetCategoriesAsync();
+            foreach (var cat in list)
+                Categories.Add(cat);
         }
     }
+
 }
