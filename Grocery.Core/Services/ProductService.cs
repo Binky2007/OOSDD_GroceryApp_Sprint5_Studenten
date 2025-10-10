@@ -37,5 +37,11 @@ namespace Grocery.Core.Services
         {
             return _productRepository.Update(item);
         }
+        public List<Product> GetByCategoryId(int categoryId)
+        {
+            return _productRepository.GetByCategoryId(categoryId);
+        }
+
+
     }
 }
