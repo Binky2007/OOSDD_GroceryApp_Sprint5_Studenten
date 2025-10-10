@@ -12,7 +12,7 @@ namespace Grocery.Core.Models
 
 
         [ObservableProperty]
-        private decimal price; // 👈 nieuwe property
+        private decimal price; 
 
         public DateOnly ShelfLife { get; set; }
 

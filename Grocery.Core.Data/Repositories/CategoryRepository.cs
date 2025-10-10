@@ -12,12 +12,13 @@ namespace Grocery.Core.Data.Repositories
     {
         public async Task<List<Category>> GetAllAsync()
         {
-            // Simuleer data
+            
             return new List<Category>
             {
                 new Category { Id = 1, Name = "Zuivel" },
                 new Category { Id = 2, Name = "Bakkerij" },
-                new Category { Id = 3, Name = "Ontbijtgranen" }
+                new Category { Id = 3, Name = "Ontbijtgranen" },
+                new Category { Id = 4, Name = "Groenten" },
             };
 
         }
